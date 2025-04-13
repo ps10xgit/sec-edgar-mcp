@@ -1,0 +1,4 @@
+fastmcp
+mcp
+secedgar==0.6.0-alpha
+typer

@@ -3,17 +3,20 @@ from secedgar.core.rest import (
     get_submissions,
     get_company_concepts,
     get_company_facts,
-    get_xbrl_frames,
+    get_xbrl_frames
 )
 from mcp.server.fastmcp import FastMCP
 from config import initialize_config
-
+import logging
 
 sec_edgar_user_agent = initialize_config()
 
 # Initialize MCP
 mcp = FastMCP("SEC EDGAR MCP", dependencies=["secedgar"])
 
+if __name__ == "__main__":
+    # Initialize and run the server
+    mcp.run(transport='sse')
 
 @mcp.tool("get_submissions")
 def get_submissions_tool(
