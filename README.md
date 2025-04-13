@@ -42,14 +42,14 @@ Follow these steps to set up and run the SEC EDGAR MCP server:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/sec-edgar-mcp.git
+   git clone https://github.com/ps10xgit/sec-edgar-mcp.git
    cd sec-edgar-mcp
    ```
 
 2. **Install dependencies**: Ensure you have [Python 3.9+](https://www.python.org/downloads/) installed. Install the required packages, including the [MCP framework](https://pypi.org/project/mcp/) and [secedgar SDK](https://pypi.org/project/sec-edgar/):
 
    ```bash
-   pip install mcp secedgar
+   pip install -r requirements.txt
    ```
 
 3. **Configure SEC EDGAR API access**: The SEC API requires a User-Agent string for all requests. Create a `.env` file in the project directory and add your user agent info:
@@ -60,11 +60,23 @@ Follow these steps to set up and run the SEC EDGAR MCP server:
 
 4. **Start the MCP server**: Launch the server to begin listening for MCP clients. For example:
    ```bash
-   mcp install sec_edgar_mcp/server.py --env-file .env --name "SEC EDGAR MCP Server"
+   mcp run server.py --transport="sse"
    ```
    Once running, the server will register its tools (see below) and await client connections. You should see logs indicating it's ready. 🎉
 
-Now the server is up and running, ready to serve EDGAR data to any MCP client! You can use the MCP CLI or an AI platform (e.g. Claude Desktop) to connect to localhost (or the appropriate transport) and start issuing tool calls.
+Now the server is up and running, ready to serve EDGAR data to any MCP client! You can use the MCP CLI or an AI platform (e.g. Claude Desktop) to connect to localhost (with sse transport, see below) and start issuing tool calls.
+
+```json
+{
+  "mcpServers": {
+    "sec-edgar": {
+      "enabled": true,
+      "transport": "sse",
+      "url": "http://localhost:8000/sse"
+    }
+  }
+}
+```
 
 ## Tools 🔧
 
